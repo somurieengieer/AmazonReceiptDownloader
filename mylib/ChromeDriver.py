@@ -29,7 +29,7 @@ class ChromeDriver:
             chopt.add_argument("--disable-extensions")
             chopt.add_argument("--disable-print-preview")
             # PDF保存
-#            chopt.add_argument("--kiosk-printing")
+            # chopt.add_argument("--kiosk-printing")
             # Headlessモードを有効にする場合はTrueを設定
             #    chopt.set_headless(True)
             self.driver = webdriver.Chrome("/Users/kazuma/PycharmProjects/SerendipDownloader/venv/chromedriver",
@@ -43,6 +43,9 @@ class ChromeDriver:
 
     # プロセス終了までにデストラクタが必ず呼び出される保証なし。呼び出し側で「del インスタンス名」で呼び出し要
     def __del__(self):
-        if self.driver is not None:
-            self.driver.close()
-            self.driver.quit()
+        try:
+            if self.driver is not None:
+                self.driver.close()
+                self.driver.quit()
+        except:
+            print("driver close error.")

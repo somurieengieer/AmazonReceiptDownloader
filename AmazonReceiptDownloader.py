@@ -1,19 +1,14 @@
-from bs4 import BeautifulSoup
-import re
 import os
 from getpass import getpass
 from time import sleep
 from mylib import ChromeDriver
 from mylib import Util
 
+SAVE_DIR = "amazon_pdfs"
+SAVE_FULL_DIR = os.getcwd() + "/" + SAVE_DIR  # ファイル保存先ディレクトリ
 
-SAVE_DIR = os.getcwd() + "/amazon_pdfs"  # ファイル保存先ディレクトリ
-
-'''
 email = input('your Amazon e-Mail: ')
-'''
 password = getpass("your Amazon password: ")
-email = "neko5827@yahoo.co.jp"
 
 
 #ログイン処理を行う。
@@ -49,7 +44,6 @@ def clickReceiptLink(driver):
             except:
                 print("exit[i=" + str(i) + "]")
                 continue
-                # return
         getReceipt(driver)
 
 # 領収書を保存し、前の画面に戻る
@@ -78,9 +72,6 @@ def getReceipt(driver):
     sleep(1)
     driver.save_screenshot(Util.pickDate(orderDate) + "_" + title + ".png")
 
-    # PDF保存
-    driver.execute_script(' return window.print();')
-
     driver.back()
 
 def goNextPage(driver):
@@ -92,7 +83,7 @@ def goNextPage(driver):
 
 
 def main():
-    cDriver = ChromeDriver.ChromeDriver(saveDir=SAVE_DIR)
+    cDriver = ChromeDriver.ChromeDriver(saveDir=SAVE_FULL_DIR)
     driver = cDriver.getDriver()
     login(driver)
 
